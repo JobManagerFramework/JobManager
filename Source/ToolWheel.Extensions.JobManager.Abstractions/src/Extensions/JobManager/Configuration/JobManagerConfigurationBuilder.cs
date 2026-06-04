@@ -105,7 +105,7 @@ namespace ToolWheel.Extensions.JobManager.Configuration
         public IJobManagerConfigurationBuilder AddMiddleware<T>()
             where T : class, IExecutionMiddleware
         {
-            services.AddScoped<IExecutionMiddleware, T>();
+            services.AddSingleton<IExecutionMiddleware, T>();
 
             return this;
         }

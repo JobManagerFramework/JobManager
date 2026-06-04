@@ -57,7 +57,7 @@ public class JobTaskTargetObjectMiddleware : IExecutionMiddleware
                     // Verwende oder erstelle eine Singleton-Instanz
                     context.TargetObject = singletonInstances.GetOrAdd(
                         context.Job.Id,
-                        _ => ActivatorUtilities.CreateInstance(serviceProvider, context.TargetMethod.DeclaringType!));
+                        _ => ActivatorUtilities.CreateInstance(resolveProvider, context.TargetMethod.DeclaringType!));
                 }
                 else
                 {
