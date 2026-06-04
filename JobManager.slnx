@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/Source/" />
+  <Folder Name="/Source/ToolWheel.Extensions.JobManager.Abstractions/" />
+  <Folder Name="/Source/ToolWheel.Extensions.JobManager.Abstractions/src/">
+    <Project Path="Source/ToolWheel.Extensions.JobManager.Abstractions/src/ToolWheel.Extensions.JobManager.Abstractions.csproj" />
+  </Folder>
+  <Folder Name="/Source/ToolWheel.Extensions.JobManager.Abstractions/test/">
+    <Project Path="Source/ToolWheel.Extensions.JobManager.Abstractions/test/ToolWheel.Extensions.JobManager.Abstractions.Test.csproj" />
+  </Folder>
+  <Folder Name="/Source/ToolWheel.Extensions.JobManager/" />
+  <Folder Name="/Source/ToolWheel.Extensions.JobManager/src/">
+    <Project Path="Source/ToolWheel.Extensions.JobManager/src/ToolWheel.Extensions.JobManager.csproj" />
+  </Folder>
+  <Folder Name="/Source/ToolWheel.Extensions.JobManager/test/">
+    <Project Path="Source/ToolWheel.Extensions.JobManager/test/ToolWheel.Extensions.JobManager.Test.csproj" />
+  </Folder>
+</Solution>

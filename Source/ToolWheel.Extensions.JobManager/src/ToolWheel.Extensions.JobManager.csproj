@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<!-- Generelle Projekt Konfiguration -->
+	<PropertyGroup />
+	<PropertyGroup>
+		<IsPackable>true</IsPackable>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageId>ToolWheel.Extensions.JobManager</PackageId>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\ToolWheel.Extensions.JobManager.Abstractions\src\ToolWheel.Extensions.JobManager.Abstractions.csproj" />
+	</ItemGroup>
+</Project>
