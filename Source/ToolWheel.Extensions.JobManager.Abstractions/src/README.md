@@ -6,7 +6,7 @@ Public API, contracts and DTOs for the ToolWheel Job Manager. This package conta
 
 | Property | Value |
 |---|---|
-| Target Framework | `net8.0; net10.0` |
+| Target Framework | `net8.0` |
 | NuGet Package ID | `ToolWheel.Extensions.JobManager.Abstractions` |
 | Dependencies | `Microsoft.Extensions.DependencyInjection.Abstractions`, `Microsoft.Extensions.Logging.Abstractions` |
 
@@ -100,6 +100,61 @@ public interface IJobTaskService
 ```
 
 `CancelAllAndWaitAsync` signals cancellation on all tracked tasks and awaits their completion – used during graceful shutdown.
+
+---
+
+### `IJobExecutionConditionService`
+
+Service for storing and retrieving execution condition features per job. Features are keyed by job and feature type so that each job holds at most one instance per feature type.
+
+```csharp
+public interface IJobExecutionConditionService
+{
+    void Add(IJob job, IJobManagerFeature feature);
+    void Add<T>(IJob job, T feature) where T : IJobManagerFeature;
+    void Update<T>(IJob job, Action<T> update) where T : IJobManagerFeature;
+    T? Get<T>(IJob job) where T : IJobManagerFeature;
+    IReadOnlyDictionary<Type, IJobManagerFeature> GetAll(IJob job);
+    bool Remove(IJob job, Type featureType);
+}
+```
+
+This service is the unified interface for extension packages to store feature-specific data per job. It allows third-party libraries to attach their own feature instances without modifying this service.
+
+---
+
+### `IJobTaskJournalService`
+
+Service responsible for recording and querying journal entries produced during job task executions.
+
+```csharp
+public interface IJobTaskJournalService
+{
+    void Append(IJobTask jobTask, JobTaskJournalEntry entry);
+    IReadOnlyCollection<JobTaskJournalEntry> GetEntries(IJobTask jobTask);
+}
+```
+
+All log entries written during a job execution are routed through this service. When a per-job logger is attached, entries are also forwarded to it.
+
+---
+
+### `IJobExecutionStatisticsService`
+
+Provides access to aggregated execution statistics for registered jobs.
+
+```csharp
+public interface IJobExecutionStatisticsService
+{
+    JobExecutionStatistics? GetStatistics(string jobId);
+    IEnumerable<JobExecutionStatistics> GetAllStatistics();
+    void Record(string jobId, string jobName, TimeSpan duration, JobTaskStatusEnum status);
+    void Reset(string jobId);
+    void ResetAll();
+}
+```
+
+Tracks execution count, success/failure rates, average duration and last execution time for each job.
 
 ---
 
@@ -198,9 +253,71 @@ public class MyConfigurator : IAutoFeatureConfigurator
 }
 ```
 
+## Storage Abstractions
+
+The framework defines storage contracts to enable custom persistence implementations beyond the default in-memory stores.
+
+### `IJobStorage`
+
+Central abstraction for job persistence.
+
+```csharp
+public interface IJobStorage
+{
+    void Add(IJob job);
+    IJob? FindById(string jobId);
+    bool Remove(string jobId);
+    IReadOnlyCollection<IJob> ReadAll();
+    bool Contains(string jobId);
+}
+```
+
+### `IJobTaskStorage`
+
+Manages persistence of job task instances and their lifecycle data.
+
+```csharp
+public interface IJobTaskStorage
+{
+    void Add(IJobTask jobTask);
+    IJobTask? FindById(string jobTaskId);
+    bool Remove(string jobTaskId);
+    IReadOnlyCollection<IJobTask> ReadAll();
+    IReadOnlyCollection<IJobTask> ReadByJob(string jobId);
+}
+```
+
+### `IJobTaskJournalStorage`
+
+Handles persistence of job task journal entries.
+
+```csharp
+public interface IJobTaskJournalStorage
+{
+    void Append(string jobTaskId, JobTaskJournalEntry entry);
+    IReadOnlyCollection<JobTaskJournalEntry> GetEntries(string jobTaskId);
+    void Clear(string jobTaskId);
+}
+```
+
+### `IExtensionOptionStorage`
+
+Generic storage for feature-specific data, allowing extensions to persist configuration without modifying the core storage interfaces.
+
+```csharp
+public interface IExtensionOptionStorage
+{
+    void Set(string key, object? value);
+    object? Get(string key);
+    bool TryGet(string key, out object? value);
+    bool Contains(string key);
+    bool Remove(string key);
+}
+```
+
 ---
 
-## Middleware
+
 
 ### `IExecutionMiddleware`
 

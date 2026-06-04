@@ -6,7 +6,7 @@ Core runtime library for the ToolWheel Job Manager. Provides default implementat
 
 | Property | Value |
 |---|---|
-| Target Framework | `net8.0; net10.0` |
+| Target Framework | `net8.0` |
 | NuGet Package ID | `ToolWheel.Extensions.JobManager` |
 | Project Reference | `ToolWheel.Extensions.JobManager.Abstractions` |
 
@@ -56,6 +56,43 @@ public class MyStartup : JobManagerStartup
             .Enabled();
     }
 }
+```
+
+---
+
+## Storage Implementations
+
+The core package provides in-memory storage implementations that can be replaced with custom persistence layers via DI.
+
+### `InMemoryJobStorage`
+
+Default implementation of `IJobStorage`. Maintains an in-memory `ConcurrentDictionary` of registered jobs.
+
+### `InMemoryJobTaskStorage`
+
+Default implementation of `IJobTaskStorage`. Tracks all active and completed job tasks in memory.
+
+### `InMemoryJobTaskJournalStorage`
+
+Default implementation of `IJobTaskJournalStorage`. Stores journal entries for each job task in memory.
+
+### `InMemoryExtensionOptionStorage`
+
+Default implementation of `IExtensionOptionStorage`. Provides a simple key-value store for extension data.
+
+**Custom Storage Example:**
+
+```csharp
+// Register a custom storage implementation
+builder.Services.AddJobManager(configure =>
+{
+    configure.ConfigureServices(services =>
+    {
+        services.AddSingleton<IJobStorage, DatabaseJobStorage>();
+        services.AddSingleton<IJobTaskStorage, DatabaseJobTaskStorage>();
+        services.AddSingleton<IJobTaskJournalStorage, DatabaseJournalStorage>();
+    });
+});
 ```
 
 ---
