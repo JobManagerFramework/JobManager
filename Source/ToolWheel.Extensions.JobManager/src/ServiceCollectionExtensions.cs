@@ -65,7 +65,7 @@ namespace ToolWheel
 
             configure?.Invoke(jobManagerConfigurationBuilder);
 
-            AutoInstallFeatureConfigurator(jobManagerConfigurationBuilder);
+            AutoInstallJobManagerModules(jobManagerConfigurationBuilder);
 
             return services;
         }
@@ -93,7 +93,7 @@ namespace ToolWheel
 
         }
 
-        private static void AutoInstallFeatureConfigurator(IJobManagerConfigurationBuilder builder)
+        private static void AutoInstallJobManagerModules(IJobManagerConfigurationBuilder builder)
         {
             foreach (var assembly in AssemblyDiscovery.GetCandidateAssemblies())
             {
@@ -117,18 +117,18 @@ namespace ToolWheel
                     if (type == null) continue;
                     if (type.IsInterface) continue;
                     if (type.IsAbstract) continue;
-                    if (!typeof(IAutoFeatureConfigurator).IsAssignableFrom(type)) continue;
+                    if (!typeof(IJobManagerModulDescription).IsAssignableFrom(type)) continue;
 
-                    if (Activator.CreateInstance(type) is IAutoFeatureConfigurator configurator)
+                    if (Activator.CreateInstance(type) is IJobManagerModulDescription configurator)
                     {
                         try
                         {
-                            configurator.AutoConfigure(builder);
+                            configurator.ModuleConfiguration(builder);
                         }
                         catch (Exception ex)
                         {
                             System.Diagnostics.Trace.TraceWarning(
-                                "AutoConfigure failed for type '{0}': {1}", type.FullName, ex.Message);
+                                "JobManager Module failed for type '{0}': {1}", type.FullName, ex.Message);
                             throw;
                         }
                     }

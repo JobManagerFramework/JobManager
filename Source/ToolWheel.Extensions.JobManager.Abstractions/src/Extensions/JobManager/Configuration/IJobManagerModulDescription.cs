@@ -13,5 +13,11 @@ public interface IJobManagerModulDescription
     /// <summary>
     /// The unique display name of the module.
     /// </summary>
-    string Name { get; }
+    string ModuleName { get; }
+
+    /// <summary>
+    /// Configures the specified job manager builder with default or recommended settings.
+    /// </summary>
+    /// <param name="builder">The job manager configuration builder to be configured. Cannot be null.</param>
+    void ModuleConfiguration(IJobManagerConfigurationBuilder builder);
 }

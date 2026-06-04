@@ -84,7 +84,7 @@ public sealed record Job : IJob
     /// <summary>
     /// Returns a human readable representation of the job, including name and id.
     /// </summary>
-    /// <returns>A string in the form "JobName={Name}, JobId={Id}".</returns>
+    /// <returns>A string in the form "JobName={ModuleName}, JobId={Id}".</returns>
     public override string ToString()
     {
         return $"JobName={Name}, JobId={Id}";
