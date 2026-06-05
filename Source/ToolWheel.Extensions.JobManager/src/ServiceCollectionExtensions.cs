@@ -40,7 +40,7 @@ namespace ToolWheel
             services.TryAddTransient(typeof(ILogger<>), typeof(Logger<>));
 
             // Storages
-            services.AddSingleton<IExtensionOptionStorage, InMemoryExtensionOptionStorage>();
+            services.AddSingleton<IJobOptionStorage, InMemoryJobOptionStorage>();
             services.AddSingleton<IJobStorage, InMemoryJobStorage>();
             services.AddSingleton<IJobTaskJournalStorage, InMemoryJobTaskJournalStorage>();
             services.AddSingleton<IJobTaskStorage, InMemoryJobTaskStorage>();
@@ -49,6 +49,7 @@ namespace ToolWheel
             services.AddSingleton<IJobExecutionConditionService, JobExecutionConditionService>();
             services.AddSingleton<IJobExecutionEvaluatorService, JobExecutionEvaluatorService>();
             services.AddSingleton<IJobExecutionStatisticsService, JobExecutionStatisticsService>();
+            services.AddSingleton<IJobOptionService, JobOptionService>();
             services.AddSingleton<IJobTaskExecutionService, JobTaskExecutionService>();
             services.AddSingleton<IJobTaskJournalService, JobTaskJournalService>();
             services.AddSingleton<IJobTaskService, JobTaskService>();
