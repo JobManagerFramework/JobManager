@@ -55,9 +55,9 @@ public interface IJobOptionStorage
     void Set(IJobOption option);
 
     /// <summary>
-    /// Tries to add the specified job option to the storage. This method attempts to add the option without overwriting any existing option for the same job and option type. If an option already exists, it will not be added, and the method will return false. If the option is successfully added, it returns true. This allows you to ensure that options are only added if they do not already exist in the storage.
+    /// Add the specified job option to the storage. This method attempts to add the option without overwriting any existing option for the same job and option type. If an option already exists, it will not be added, and the method will return false. If the option is successfully added, it returns true. This allows you to ensure that options are only added if they do not already exist in the storage.
     /// </summary>
     /// <param name="option">The job option to add.</param>
     /// <returns>True if the option was successfully added; otherwise, false.</returns>
-    bool TryAdd(IJobOption option);
+    bool Add(IJobOption option);
 }

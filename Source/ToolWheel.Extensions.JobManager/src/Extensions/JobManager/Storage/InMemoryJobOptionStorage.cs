@@ -24,7 +24,7 @@ public class InMemoryJobOptionStorage : IJobOptionStorage
     }
 
     /// <inheritdoc/>
-    public bool TryAdd(IJobOption option)
+    public bool Add(IJobOption option)
     {
         ArgumentNullException.ThrowIfNull(option, nameof(option));
 
