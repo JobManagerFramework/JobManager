@@ -83,7 +83,7 @@ public class JobManagerConfigurationBuilderTest
         var services = new ServiceCollection();
         var builder = new JobManagerConfigurationBuilder(jobManagerConfiguration, services);
 
-        builder.ConfigureService<TestService>(ServiceLifetime.Singleton, (sp, cfg) =>
+        builder.AddServiceFactory<TestService>(ServiceLifetime.Singleton, (sp, cfg) =>
         {
             // Use configuration to influence creation (sanity check)
             return new TestService { Value = cfg.Jobs.Count };
@@ -103,7 +103,7 @@ public class JobManagerConfigurationBuilderTest
         var services = new ServiceCollection();
         var builder = new JobManagerConfigurationBuilder(jobManagerConfiguration, services);
 
-        builder.ConfigureService<TestService>(ServiceLifetime.Scoped, (sp, cfg) => null!);
+        builder.AddServiceFactory<TestService>(ServiceLifetime.Scoped, (sp, cfg) => null!);
 
         var provider = services.BuildServiceProvider();
 

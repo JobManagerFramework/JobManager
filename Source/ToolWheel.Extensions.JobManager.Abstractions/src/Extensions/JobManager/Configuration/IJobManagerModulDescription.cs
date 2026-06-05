@@ -16,8 +16,9 @@ public interface IJobManagerModulDescription
     string ModuleName { get; }
 
     /// <summary>
-    /// Configures the specified job manager builder with default or recommended settings.
+    /// An optional way to register services related to the module. Like middleware, execution conditions, etc.
     /// </summary>
-    /// <param name="builder">The job manager configuration builder to be configured. Cannot be null.</param>
-    void ModuleConfiguration(IJobManagerConfigurationBuilder builder);
+    /// <param name="builder"></param>
+    void ModuleConfiguration(IJobManagerConfigurationBuilder builder)
+    { }
 }

@@ -60,12 +60,12 @@ public class JobService : IJobService
             throw new InvalidOperationException($"A job with the id '{jobDescription.Id}' already exists.");
         }
 
+        logger.LogInformation("Job added with Id '{JobId}', Name '{JobName}'", job.Id, job.Name);
+
         foreach (var feature in jobDescription.Features)
         {
             feature.Apply(serviceProvider, jobDescription, job);
         }
-
-        logger.LogInformation("Job added with Id '{JobId}', Name '{JobName}'", job.Id, job.Name);
 
         return job;
     }

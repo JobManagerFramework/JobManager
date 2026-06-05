@@ -58,7 +58,7 @@ namespace ToolWheel.Extensions.JobManager.Configuration
         /// <param name="serviceLifetime">The lifetime for the registered service.</param>
         /// <param name="action">A factory that produces an instance of <typeparamref name="TService"/> given an <see cref="IServiceProvider"/> and the current <see cref="IJobManagerConfiguration"/>.</param>
         /// <returns>The current <see cref="JobManagerConfigurationBuilder"/> instance for fluent chaining.</returns>
-        public IJobManagerConfigurationBuilder ConfigureService<TService>(ServiceLifetime serviceLifetime, Func<IServiceProvider, IJobManagerConfiguration, TService> action)
+        public IJobManagerConfigurationBuilder AddServiceFactory<TService>(ServiceLifetime serviceLifetime, Func<IServiceProvider, IJobManagerConfiguration, TService> action)
         {
             var serviceDescriptor = new ServiceDescriptor(typeof(TService), serviceProvider =>
             {
@@ -110,6 +110,12 @@ namespace ToolWheel.Extensions.JobManager.Configuration
             return this;
         }
 
+        /// <summary>
+        /// Registers a module description which can be used to group related job configurations and features together.
+        /// </summary>
+        /// <typeparam name="T">The module description type (must implement <see cref="IJobManagerModulDescription"/>).</typeparam>
+        /// <returns></returns>
+        [Obsolete("Modules are deprecated in favor of direct configuration. Please configure your services and features directly on the builder.", error: false)]
         public IJobManagerConfigurationBuilder AddModuleDescription<T>()
              where T : class, IJobManagerModulDescription
         {

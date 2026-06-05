@@ -34,6 +34,12 @@ namespace ToolWheel.Extensions.JobManager.Configuration
         /// <typeparam name="T">The middleware implementation type.</typeparam>
         IJobManagerConfigurationBuilder AddMiddleware<T>() where T : class, IExecutionMiddleware;
 
+        /// <summary>
+        /// Registers a module description which can be used to group related job configurations and features together.
+        /// </summary>
+        /// <typeparam name="T">The module description type (must implement <see cref="IJobManagerModulDescription"/>).</typeparam>
+        /// <returns></returns>
+        [Obsolete("Modules are deprecated in favor of direct configuration. Please configure your services and features directly on the builder.", error: false)]
         IJobManagerConfigurationBuilder AddModuleDescription<T>() where T : class, IJobManagerModulDescription;
 
         /// <summary>
@@ -48,7 +54,7 @@ namespace ToolWheel.Extensions.JobManager.Configuration
         /// <typeparam name="TService">The service type.</typeparam>
         /// <param name="serviceLifetime">The lifetime for the registered service.</param>
         /// <param name="action">A factory that creates the service given an <see cref="IServiceProvider"/> and the current <see cref="IJobManagerConfiguration"/>.</param>
-        IJobManagerConfigurationBuilder ConfigureService<TService>(ServiceLifetime serviceLifetime, Func<IServiceProvider, IJobManagerConfiguration, TService> action);
+        IJobManagerConfigurationBuilder AddServiceFactory<TService>(ServiceLifetime serviceLifetime, Func<IServiceProvider, IJobManagerConfiguration, TService> action);
 
         /// <summary>
         /// Retrieves the specified feature associated with the job manager.

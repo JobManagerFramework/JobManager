@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -30,8 +31,6 @@ namespace ToolWheel
         /// <returns>The same <see cref="IServiceCollection"/> instance for chaining.</returns>
         public static IServiceCollection AddJobManager(this IServiceCollection services, Action<IJobManagerConfigurationBuilder>? configure = null)
         {
-            // Registrierungen für Dependency Injection (sortiert nach Gruppen und innerhalb der Gruppen alphabetisch).
-            // Ziel: bessere Lesbarkeit und Wartbarkeit der Service-Registrierungen.
             var jobManagerConfiguration = new JobManagerConfiguration();
             var jobManagerConfigurationBuilder = new JobManagerConfigurationBuilder(jobManagerConfiguration, services);
 
@@ -55,7 +54,7 @@ namespace ToolWheel
             services.AddSingleton<IJobTaskService, JobTaskService>();
 
             // Factory / JobService
-            jobManagerConfigurationBuilder.ConfigureService(ServiceLifetime.Singleton, CreateJobService);
+            jobManagerConfigurationBuilder.AddServiceFactory(ServiceLifetime.Singleton, CreateJobService);
 
             // Conditions & Controllers
             jobManagerConfigurationBuilder.AddExecutionConditionController<JobExecutionConditionController>();
@@ -98,28 +97,12 @@ namespace ToolWheel
         {
             foreach (var assembly in AssemblyDiscovery.GetCandidateAssemblies())
             {
-                Type[] types;
-                try
-                {
-                    types = assembly.GetTypes();
-                }
-                catch (ReflectionTypeLoadException ex)
-                {
-                    types = ex.Types.Where(t => t != null).ToArray()!;
-                }
-                catch
-                {
-                    // If types cannot be resolved, skip this assembly
-                    continue;
-                }
+                var types = from type in assembly.GetTypes()
+                            where type is not null && type.IsClass && !type.IsAbstract && typeof(IJobManagerModulDescription).IsAssignableFrom(type)
+                            select type;
 
                 foreach (var type in types)
                 {
-                    if (type == null) continue;
-                    if (type.IsInterface) continue;
-                    if (type.IsAbstract) continue;
-                    if (!typeof(IJobManagerModulDescription).IsAssignableFrom(type)) continue;
-
                     if (Activator.CreateInstance(type) is IJobManagerModulDescription configurator)
                     {
                         try
