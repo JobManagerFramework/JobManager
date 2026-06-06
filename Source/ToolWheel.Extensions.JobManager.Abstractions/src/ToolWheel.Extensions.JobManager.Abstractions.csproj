@@ -5,6 +5,7 @@
 		<IsPackable>true</IsPackable>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>ToolWheel.Extensions.JobManager.Abstractions</PackageId>
+		<Title>Public interfaces and contracts for the ToolWheel Job Manager</Title>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 	<ItemGroup>

@@ -5,6 +5,7 @@
 		<IsPackable>true</IsPackable>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>ToolWheel.Extensions.JobManager</PackageId>
+		<Title>Core runtime library for the ToolWheel Job Manager.</Title>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 	<ItemGroup>

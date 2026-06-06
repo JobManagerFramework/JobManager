@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyModel;
 namespace ToolWheel.Extensions.JobManager.Configuration;
 
 /// <summary>
-/// Provides assembly discovery for <see cref="IAutoFeatureConfigurator"/> scanning.
+/// Provides assembly discovery for automatic feature configurator scanning.
 /// </summary>
 /// <remarks>
 /// <para>
@@ -33,7 +33,7 @@ namespace ToolWheel.Extensions.JobManager.Configuration;
 public static class AssemblyDiscovery
 {
     /// <summary>
-    /// Returns all assemblies that are candidates for <see cref="IAutoFeatureConfigurator"/> discovery.
+    /// Returns all assemblies that are candidates for automatic feature configurator discovery.
     /// </summary>
     /// <returns>
     /// A read-only list of <see cref="Assembly"/> instances. The list always contains
