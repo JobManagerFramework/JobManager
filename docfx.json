@@ -3,7 +3,7 @@
     {
       "src": [
         { 
-          "files": [ "Source/Extensions/JobManager/**/*.csproj" ], 
+          "files": [ "Source/**/*.csproj" ], 
           "exclude": [ "**/bin/**", "**/obj/**", "**/*.Test.csproj" ],
           "cwd": "." 
         }
@@ -23,8 +23,8 @@
     "dest": "docs/site",
     "template": [ "default", "modern" ],
     "globalMetadata": {
-      "_appTitle": "JobManager API Dokumentation",
-      "_appFooter": "ToolWheel JobManager - © ToolWheelDE",
+      "_appTitle": "JobManager API",
+      "_appFooter": "ToolWheel JobManager Project",
       "_enableSearch": true
     }
   }
