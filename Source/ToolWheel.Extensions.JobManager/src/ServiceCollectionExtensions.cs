@@ -39,6 +39,7 @@ namespace ToolWheel
             services.TryAddTransient(typeof(ILogger<>), typeof(Logger<>));
 
             // Storages
+            services.AddSingleton<IExtensionOptionStorage, InMemoryExtensionOptionStorage>();
             services.AddSingleton<IJobOptionStorage, InMemoryJobOptionStorage>();
             services.AddSingleton<IJobStorage, InMemoryJobStorage>();
             services.AddSingleton<IJobTaskJournalStorage, InMemoryJobTaskJournalStorage>();
@@ -49,6 +50,7 @@ namespace ToolWheel
             services.AddSingleton<IJobExecutionEvaluatorService, JobExecutionEvaluatorService>();
             services.AddSingleton<IJobExecutionStatisticsService, JobExecutionStatisticsService>();
             services.AddSingleton<IJobOptionService, JobOptionService>();
+            services.AddSingleton<IExtensionOptionService, ExtensionOptionService>();
             services.AddSingleton<IJobTaskExecutionService, JobTaskExecutionService>();
             services.AddSingleton<IJobTaskJournalService, JobTaskJournalService>();
             services.AddSingleton<IJobTaskService, JobTaskService>();
@@ -87,7 +89,7 @@ namespace ToolWheel
             return services.AddJobManager(configure =>
             {
                 startup.ConfigureJobManager(configure);
-                
+
                 configure.ConfigureJobs(startup.ConfigureJobs);
             });
 
