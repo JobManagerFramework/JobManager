@@ -1,4 +1,7 @@
 <Project>
+	<!-- Importiere die Root Directory.Build.props, falls sie existiert (z.B. beim Laden über Workspace-Solution) -->
+	<Import Project="$(MSBuildThisFileDirectory)..\..\Directory.Build.props" Condition="Exists('$(MSBuildThisFileDirectory)..\..\Directory.Build.props')" />
+
 	<!-- See https://aka.ms/dotnet/msbuild/customize for more details on customizing your build -->
 	<PropertyGroup>
 		<TargetFrameworks>net8.0</TargetFrameworks>
