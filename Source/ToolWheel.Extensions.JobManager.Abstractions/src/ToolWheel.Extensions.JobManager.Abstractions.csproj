@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<!-- GenerelleProjektKonfiguration -->
-	<PropertyGroup />
+	<PropertyGroup>
+	  <Configurations>Debug;Release;Debug-WithoutWorkspace</Configurations>
+	</PropertyGroup>
 	<PropertyGroup>
 		<IsPackable>true</IsPackable>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -9,8 +11,8 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-		<PackageReference Include="Microsoft.Extensions.DependencyModel" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="[10.0.0,11.0.0)" />
+		<PackageReference Include="Microsoft.Extensions.DependencyModel" Version="[10.0.0,11.0.0)" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="[10.0.0,11.0.0)" />
 	</ItemGroup>
 </Project>
